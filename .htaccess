@@ -1,0 +1,29 @@
+# MessV2 - Apache URL Rewrite
+# Cần bật mod_rewrite trên Apache
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Nếu app không ở root, điều chỉnh RewriteBase
+    # VD: RewriteBase /messv2
+    RewriteBase /messv2
+    
+    # Không rewrite file và folder thật sự tồn tại
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Chuyển tất cả request về index.php
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Bảo mật - chặn truy cập trực tiếp vào các thư mục nhạy cảm
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Chặn truy cập file .env
+<FilesMatch "\.env$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

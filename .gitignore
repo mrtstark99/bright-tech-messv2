@@ -1,0 +1,36 @@
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+
+# Database
+storage/database/*.db
+storage/database/*.sqlite
+
+# Logs
+storage/logs/*
+!storage/logs/.gitkeep
+
+# Cache
+storage/cache/*
+!storage/cache/.gitkeep
+
+# Node modules
+node_modules/
+
+# Build output
+public/build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp

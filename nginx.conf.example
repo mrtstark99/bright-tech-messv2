@@ -1,0 +1,29 @@
+# MessV2 Nginx Configuration
+# Gửi file này cho support hosting để họ thêm vào config
+
+server {
+    # ... existing server config ...
+    
+    # MessV2 routing - thêm vào trong server block
+    location /messv2 {
+        alias /path/to/messv2;
+        try_files $uri $uri/ @messv2;
+        
+        location ~ \.php$ {
+            fastcgi_pass unix:/var/run/php/php-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            include fastcgi_params;
+        }
+    }
+    
+    location @messv2 {
+        rewrite /messv2/(.*)$ /messv2/index.php?/$1 last;
+    }
+    
+    # Bảo mật
+    location ~ /messv2/(\.env|app|storage) {
+        deny all;
+        return 404;
+    }
+}
